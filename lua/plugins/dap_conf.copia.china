@@ -1,0 +1,35 @@
+local dap = require('dap')
+local Terminal  = require('toggleterm.terminal').Terminal
+
+-- Terminal integrada para debugpy
+local debugpy_term = Terminal:new({
+  cmd = "python -m debugpy --listen 5678 --wait-for-client ${file}", -- ${file} es el archivo actual
+  hidden = true,
+  direction = "horizontal",
+  close_on_exit = false,
+})
+
+function _G.toggle_debugpy()
+  debugpy_term:toggle()
+end
+
+dap.adapters.python = {
+  type = 'server',
+  host = '127.0.0.1',
+  port = 5678,
+}
+
+dap.configurations.python = {
+  {
+    type = 'python',
+    request = 'attach',
+    name = "Attach to debugpy",
+    connect = {
+      host = "127.0.0.1",
+      port = 5678,
+    },
+    pythonPath = function()
+      return '/home/phenix/.venvs/nvim-debug/bin/python'
+    end,
+  },
+}
