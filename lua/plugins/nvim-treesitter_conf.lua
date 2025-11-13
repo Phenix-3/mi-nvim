@@ -4,6 +4,7 @@ require('nvim-treesitter.configs').setup {
       "python",
       "php",
       "html",
+      "bash",
       "css"
    },
    highlight = {
