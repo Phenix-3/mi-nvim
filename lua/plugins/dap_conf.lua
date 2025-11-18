@@ -1,52 +1,53 @@
+-- compruebo dependencias
 local dap = require("dap")
 local Terminal = require("toggleterm.terminal").Terminal
 
--- 🔌 Adaptador para debugpy
+-- envio a mi por mi puerto
 dap.adapters.python = {
-  type = "server",
-  host = "127.0.0.1",
-  port = 5678,
+  type = "server", -- mi yo server
+  host = "127.0.0.1", -- me lo envio a yo
+  port = 5678, -- puerto que uso para enviar y recibir (se puede cambiar su este ya está en uso)
 }
 
--- 🧠 Configuración para adjuntar debugpy a scripts Python
+-- conf debugpy
 dap.configurations.python = {
   {
-    type = "python",
-    request = "attach",
-    name = "Attach to debugpy",
+    type = "python", -- lo que te llegue será python
+    request = "attach", -- enchufate a mi python
+    name = "Attach to debugpy", -- nombre (da igual como se llame)
     connect = {
-      host = "127.0.0.1",
-      port = 5678,
+      host = "127.0.0.1", -- me conecto a mi mismo
+      port = 5678, -- puerto por el que me enchufo
     },
-    mode = "remote",
-    pathMappings = {
+    mode = "remote", -- opcional
+    pathMappings = { 
       {
-        localRoot = vim.fn.getcwd(),
-        remoteRoot = ".",
+        localRoot = vim.fn.getcwd(), -- raiz acutal (fichero py)
+        remoteRoot = ".", -- ruta donde se ejecuta el script 
       },
     },
-    pythonPath = function()
-      -- Cambia esta ruta si tu entorno virtual cambia
-      return "/home/phenix/.venvs/nvim-debug/bin/python"
+    pythonPath = function() -- ruta absoluta ejecutable de python
+      return "/home/phenix/.venvs/nvim-debug/bin/python" -- mi entorno virtual (venvs)
     end,
   },
 }
 
--- 🚀 Función para ejecutar el script actual en modo debug y hacer attach automáticamente
+-- ejecuta el script actual modo debug 
 function RunAndAttachDebugpy()
-  local file = vim.fn.expand("%:p") -- Ruta completa del archivo actual
+  local file = vim.fn.expand("%:p") -- ruta absoluta fichero actual
 
   local debugpy_term = Terminal:new({
     cmd = string.format(
-      "source /home/phenix/.venvs/nvim-debug/bin/activate && python -m debugpy --listen 5678 --wait-for-client '%s'",
+      "source /home/phenix/.venvs/nvim-debug/bin/activate && python -m debugpy --listen 5678 --wait-for-client '%s'", -- activa el entorno virtual
       file
     ),
+    -- ya definido en otro fichero
     hidden = true,
     direction = "horizontal",
     close_on_exit = false,
     on_open = function()
-      vim.defer_fn(function()
-        vim.cmd("wincmd p") -- ⬅️ Vuelve al buffer anterior (el archivo .py)
+      vim.defer_fn(function() -- segundos a que todo este bien
+        vim.cmd("wincmd p")
         require('dap').continue()
       end, 500)
     end,
@@ -55,14 +56,14 @@ function RunAndAttachDebugpy()
   debugpy_term:toggle()
 end
 
--- 🔄 Función para reiniciar el cliente DAP si algo se cuelga
+-- si sale mal reiniciar dap (cosa muy comun)
 function RestartDAP()
   dap.terminate()
   dap.disconnect()
   print("DAP reiniciado.")
 end
 
--- ⌨️ Mapas de tecla para lanzar y reiniciar debug
-vim.api.nvim_set_keymap("n", "<F5>", ":lua RunAndAttachDebugpy()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<F6>", ":lua RestartDAP()<CR>", { noremap = true, silent = true })
+-- keymap
+vim.api.nvim_set_keymap("n", "<F5>", ":lua RunAndAttachDebugpy()<CR>", { noremap = true, silent = true }) -- f5 salta la termianl
+vim.api.nvim_set_keymap("n", "<F6>", ":lua RestartDAP()<CR>", { noremap = true, silent = true }) -- f6 restart de dap
 

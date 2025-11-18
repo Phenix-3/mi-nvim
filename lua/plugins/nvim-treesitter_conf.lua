@@ -1,5 +1,6 @@
+-- aqui los lenguajes que quiera
 require('nvim-treesitter.configs').setup {
-   ensure_installed = {
+   ensure_installed = { -- que lenguajes entender, añadir mas si es necesario
       "lua",
       "python",
       "php",
@@ -8,7 +9,6 @@ require('nvim-treesitter.configs').setup {
       "css"
    },
    highlight = {
-      enable = true,
-      -- use_languagetree = true, -- esta opción está deprecada en versiones recientes
+      enable = true, -- resaltado de errores 
    },
 }

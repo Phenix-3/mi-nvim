@@ -1,12 +1,10 @@
--- Configuración para el tema gruvbox
-
--- Activar true color para mejor soporte de colores
+-- mejora soporte de colores (recomendado por el autor)
 vim.o.termguicolors = true
 
--- Opciones del tema gruvbox (puedes ajustarlas)
+-- opciones del tema, importante hacer si tu terminal es trasnparente
 vim.g.gruvbox_contrast_dark = "hard"
 vim.g.gruvbox_invert_selection = "0"
 
--- Cargar el tema gruvbox
+-- cargar tema, se puede cambiar
 vim.cmd([[colorscheme tokyonight]])
 

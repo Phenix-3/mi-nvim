@@ -1,10 +1,10 @@
 " leader tecla
 let mapleader = ","
 
-" Directorio de plugins
+" directorio de plugins
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Aquí irán los plugins a instalar
+" plugins a instalar:
 " barra inferior
 Plug 'nvim-lualine/lualine.nvim' " barra inferior
 Plug 'nvim-tree/nvim-web-devicons' " dependencia barra inferior
@@ -13,8 +13,7 @@ Plug 'nvim-tree/nvim-web-devicons' " dependencia barra inferior
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" nvim-treesitter, es un estructurador y coloreador de código, poner nuevo
-" lenguaje si se usa otro no añadido en su .lua
+" nvim-treesitter, es un estructurador y coloreador de código, poner nuevo lenguaje si se usa otro no añadido en su .lua
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " autopairs, cerrado automatico de elementos como '' o ()
@@ -23,19 +22,19 @@ Plug 'windwp/nvim-autopairs'
 " comment, comentarios rapidos en codigo
 Plug 'terrortylor/nvim-comment'
 
-" nvim-dap, compila programas sin necesidad de salirse
-Plug 'mfussenegger/nvim-dap'
+" nvim-dap, compila o ejecuta programas sin necesidad de salirse, de momento
+" solo python
+Plug 'mfussenegger/nvim-dap' " interprete/compilador
 Plug 'nvim-neotest/nvim-nio' " mejora interfaz
 Plug 'rcarriga/nvim-dap-ui' " dependencia de los dos anteriores
 
 " toggleterm, terminal flotante
-Plug 'akinsho/nvim-toggleterm.lua'
+Plug 'akinsho/nvim-toggleterm.lua' "abre una terminal independiente
 
 "nvim-cpm, autocompletado
-" Autocompletado moderno con LSP
-Plug 'neovim/nvim-lspconfig'               " Configuración de LSP
-Plug 'williamboman/mason.nvim'             " Instalador de LSPs
-Plug 'williamboman/mason-lspconfig.nvim'   " Bridge entre Mason y lspconfig
+Plug 'neovim/nvim-lspconfig'               " autocompletado
+Plug 'williamboman/mason.nvim'             " instalador LSP
+Plug 'williamboman/mason-lspconfig.nvim'   " dependencia para hablar entre mason y lspconfig
 
 Plug 'hrsh7th/nvim-cmp'                     " Autocompletado principal
 Plug 'hrsh7th/cmp-nvim-lsp'                 " Fuente: LSP
@@ -45,17 +44,17 @@ Plug 'hrsh7th/cmp-cmdline'                  " Fuente: línea de comandos
 Plug 'L3MON4D3/LuaSnip'                     " Motor de snippets
 Plug 'saadparwaiz1/cmp_luasnip'             " Integración LuaSnip + nvim-cmp
 
-" colores
-Plug 'folke/tokyonight.nvim'
-
+" colores, pudes cambiar el tema
+Plug 'folke/tokyonight.nvim' "cambia tema
+" donde se encuentra la configuracion en el path nvim
 lua << EOF
 local home = os.getenv("HOME")
 package.path = package.path .. ";" .. home .. "/.config/nvim/lua/?.lua" .. ";" .. home .. "/.config/nvim/lua/?/init.lua"
 EOF
 
-call plug#end()
+call plug#end() " fin de plugins
 
-" Luego de esta línea puedes agregar tus configuraciones y mappings
+" lugar de configuracion de plugins (todo lua)
 lua require('plugins.lualine_conf')
 lua require('plugins.fzf_conf')
 lua require('plugins.nvim-treesitter_conf')
