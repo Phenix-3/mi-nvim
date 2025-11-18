@@ -1,4 +1,4 @@
--- ~/.config/nvim/lua/plugins/cmp_conf.lua
+-- repasar los comentarios
 -- utilizare mason (gestor de paquetes de lsp)
 local mason = require("mason")
 mason.setup()
@@ -14,8 +14,41 @@ local luasnip = require("luasnip")
 local lspconfig = require("lspconfig")
 local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
-local capabilities = cmp_nvim_lsp.default_capabilities() -- configuracion estandar recomendada de lsp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
+-- dependencias mason
+local mason = require("mason")
+mason.setup()
+
+local mason_lspconfig = require("mason-lspconfig")
+mason_lspconfig.setup({
+    ensure_installed = { "ts_ls", "pyright", "lua_ls" }, 
+    automatic_installation = true,
+--handlers para delegar la configuración.
+    handlers = {
+        -- handler por defecto para todos los servidores no especificados.
+        function (server_name)
+            lspconfig[server_name].setup({
+                capabilities = capabilities,
+            })
+        end,
+        
+        -- handler para lua_ls
+        lua_ls = function ()
+            lspconfig.lua_ls.setup({
+                capabilities = capabilities,
+                settings = {
+                    Lua = {
+                        diagnostics = {
+                            globals = { "vim" },
+                        },
+                    },
+                },
+            })
+        end,
+    },
+})
 -- motor principal de autocompletado
 cmp.setup({
   snippet = {
@@ -36,22 +69,3 @@ cmp.setup({
     { name = "buffer" }, -- lo que ya he escrito
   }),
 })
-
--- para evitar warning usar esta línea antes de configurar lspconfig
-vim.lsp.set_log_level("error")  -- oculta warnings en el log, no se como solucionarlo
-
-local servers = { "ts_ls", "pyright", "lua_ls" } -- autoconfiguracion
-
-for _, server in ipairs(servers) do -- bucle que busca entre los tres servers que puede autocompletar (chupa ram)
-  lspconfig[server].setup({
-    capabilities = capabilities,
-    settings = server == "lua_ls" and {
-      Lua = {
-        diagnostics = {
-          globals = { "vim" },
-        },
-      },
-    } or nil,
-  })
-end
-
