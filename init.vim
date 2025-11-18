@@ -36,13 +36,23 @@ Plug 'neovim/nvim-lspconfig'               " autocompletado
 Plug 'williamboman/mason.nvim'             " instalador LSP
 Plug 'williamboman/mason-lspconfig.nvim'   " dependencia para hablar entre mason y lspconfig
 
-Plug 'hrsh7th/nvim-cmp'                     " Autocompletado principal
-Plug 'hrsh7th/cmp-nvim-lsp'                 " Fuente: LSP
-Plug 'hrsh7th/cmp-buffer'                   " Fuente: buffer
-Plug 'hrsh7th/cmp-path'                     " Fuente: sistema de archivos
-Plug 'hrsh7th/cmp-cmdline'                  " Fuente: línea de comandos
-Plug 'L3MON4D3/LuaSnip'                     " Motor de snippets
-Plug 'saadparwaiz1/cmp_luasnip'             " Integración LuaSnip + nvim-cmp
+Plug 'hrsh7th/nvim-cmp'                     " autocompletado principal
+Plug 'hrsh7th/cmp-nvim-lsp'                 "fuente: LSP
+Plug 'hrsh7th/cmp-buffer'                   " fuente: buffer
+Plug 'hrsh7th/cmp-path'                     " fuente: sistema de archivos
+Plug 'hrsh7th/cmp-cmdline'                  " fuente: línea de comandos
+Plug 'L3MON4D3/LuaSnip'                     " motor de snippets
+Plug 'saadparwaiz1/cmp_luasnip'             " luaSnip + nvim-cmp
+
+"nvim-tree, arbol de directórios
+Plug 'nvim-tree/nvim-tree.lua' "para directorios
+Plug 'nvim-tree/nvim-web-devicons' " iconos
+
+" git
+Plug 'lewis6991/gitsigns.nvim' " ver los cambios git 
+
+" identacion
+Plug 'lukas-reineke/indent-blankline.nvim' " guía de indentación (|)
 
 " colores, pudes cambiar el tema
 Plug 'folke/tokyonight.nvim' "cambia tema
@@ -64,6 +74,10 @@ lua require('plugins.dap_conf')
 lua require('plugins.toggleterm_conf')
 lua require('plugins.cmp_conf')
 lua require("plugins.tokyonight_conf")
+lua require('plugins.tree_conf')
+lua require("plugins.gitsigns_conf")
+lua require("plugins.identline_conf")
+
 
 " keymaps
 "lua require('keymap.dap_keymap')
