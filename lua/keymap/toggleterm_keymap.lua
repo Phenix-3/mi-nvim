@@ -18,4 +18,3 @@ end
 
 -- keymap para sacar debugpy (`,dt`) [no lo uso, quitar]
 vim.api.nvim_set_keymap('n', '<leader>dt', ':lua toggle_debugpy()<CR>', { noremap = true, silent = true })
-

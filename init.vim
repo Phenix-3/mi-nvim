@@ -9,10 +9,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'nvim-lualine/lualine.nvim' " barra inferior
 Plug 'nvim-tree/nvim-web-devicons' " dependencia barra inferior
 
-" fzf, buscador de ficheros
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
 " nvim-treesitter, es un estructurador y coloreador de código, poner nuevo lenguaje si se usa otro no añadido en su .lua
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
@@ -54,6 +50,21 @@ Plug 'lewis6991/gitsigns.nvim' " ver los cambios git
 " identacion
 Plug 'lukas-reineke/indent-blankline.nvim' " guía de indentación (|)
 
+" para buscar
+Plug 'nvim-lua/plenary.nvim' " dependencia telescope
+Plug 'nvim-telescope/telescope.nvim', { 'tag': 'v0.2.0' } " telescope
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-tree/nvim-web-devicons'
+
+" oil conectar maquina remota
+Plug 'stevearc/oil.nvim' "oil
+
+" pestañas arriba
+Plug 'romgrk/barbar.nvim' " barbar
+" cosas de barbar
+set termguicolors " Activa colores reales (necesario para que se vea bonito)
+set showtabline=2 " Muestra siempre la barra de pestañas arriba
+
 " colores, pudes cambiar el tema
 Plug 'folke/tokyonight.nvim' "cambia tema
 " donde se encuentra la configuracion en el path nvim
@@ -66,7 +77,6 @@ call plug#end() " fin de plugins
 
 " lugar de configuracion de plugins (todo lua)
 lua require('plugins.lualine_conf')
-lua require('plugins.fzf_conf')
 lua require('plugins.nvim-treesitter_conf')
 lua require('plugins.autopairs_conf')
 lua require('plugins.comment_conf')
@@ -77,9 +87,14 @@ lua require("plugins.tokyonight_conf")
 lua require('plugins.tree_conf')
 lua require("plugins.gitsigns_conf")
 lua require("plugins.identline_conf")
-
+lua require('plugins.telescope_conf')
+lua require('plugins.barbar_conf')
+lua require('plugins.oil_conf')
 
 " keymaps
 "lua require('keymap.dap_keymap')
 lua require('keymap.toggleterm_keymap')
 lua require('keymap.copiar_keymap')
+lua require('keymap.telescope_keymap')
+lua require('keymap.general_keymap')
+lua require('keymap.barbar_keymap')
