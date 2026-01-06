@@ -1,4 +1,5 @@
 require("nvim-tree").setup({
+    sync_root_with_cwd = true, -- cambia arbol con !cd
     view = {
         -- anchura del arbol
         width = 30,
@@ -22,12 +23,16 @@ require("nvim-tree").setup({
     },
     update_focused_file = {
         enable = true, -- cada vez que se invoca mirar donde tengo la raiz nvim
-        update_cwd = true, -- actualizar cada vez que invoco
+        update_root = true, -- actualizar cada vez que invoco
     },
     actions = {
         open_file = {
             -- permite habrir archivos
             quit_on_open = false,
+        },
+	change_dir = {
+            enable = true,
+            global = true,
         },
     },
 })

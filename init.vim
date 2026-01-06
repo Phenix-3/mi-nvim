@@ -32,6 +32,8 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' } " dependencia 
 Plug 'stevearc/oil.nvim' " conexion a maquina externa
 Plug 'romgrk/barbar.nvim' " pestañas superiores
 Plug 'EdenEast/nightfox.nvim' " tema actual
+Plug 'lambdalisue/suda.vim' " ser sudo en remoto
+Plug 'miversen33/netman.nvim' " ssh conexion 
 
 " Fin Plugins 
 call plug#end() 
@@ -87,3 +89,4 @@ safe_require('keymap.copiar_keymap')
 safe_require('keymap.telescope_keymap')
 safe_require('keymap.general_keymap')
 safe_require('keymap.barbar_keymap')
+safe_require('keymap.tree_keymap')
