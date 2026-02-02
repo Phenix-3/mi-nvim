@@ -1,6 +1,9 @@
 require("lualine").setup {
   options = {
     theme = "codedark", -- tema de colores de letras
+    disabled_filetypes = {
+      statusline = {'NvimTree'}
+    }
   },
   sections = {
     lualine_a = { "mode" }, -- modo actual (IMPORTANTE)
