@@ -59,9 +59,12 @@ require("lazy").setup({
   'nvim-tree/nvim-tree.lua',
 
   -- Databases
-  'tpope/vim-dadbod',
-  'kristijanhusak/vim-dadbod-ui',
-  'kristijanhusak/vim-dadbod-completion'
+ -- 'tpope/vim-dadbod',
+ -- 'kristijanhusak/vim-dadbod-ui',
+ -- 'kristijanhusak/vim-dadbod-completion'
+ --'kndndrj/nvim-dbee',
+ -- { import = "plugins" }
+  require("plugins.dbee_conf")
 })
 
 -- 4. Opciones de Interfaz (VimScript a Lua)
@@ -95,8 +98,8 @@ local function load_config(mod)
         print("Error cargando: " .. mod)
     end
 end
-
--- Cargar tus archivos de configuración
+--
+---- Cargar tus archivos de configuración
 load_config('plugins.nvim-treesitter_conf')
 load_config('plugins.nightfox_conf')
 load_config('plugins.lualine_conf')
@@ -111,7 +114,8 @@ load_config('plugins.identline_conf')
 load_config('plugins.telescope_conf')
 load_config('plugins.barbar_conf')
 load_config('plugins.oil_conf')
-load_config('plugins.dadbod_conf')
+--load_config('plugins.dadbod_conf')
+load_config('plugins.dbee_conf')
 
 -- Keymaps externos
 load_config('keymap.toggleterm_keymap')
@@ -120,3 +124,4 @@ load_config('keymap.telescope_keymap')
 load_config('keymap.general_keymap')
 load_config('keymap.barbar_keymap')
 load_config('keymap.tree_keymap')
+load_config('keymap.dbee_keymap')
