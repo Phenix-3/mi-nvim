@@ -57,6 +57,11 @@ require("lazy").setup({
   
   -- File Explorer
   'nvim-tree/nvim-tree.lua',
+
+  -- Databases
+  'tpope/vim-dadbod',
+  'kristijanhusak/vim-dadbod-ui',
+  'kristijanhusak/vim-dadbod-completion'
 })
 
 -- 4. Opciones de Interfaz (VimScript a Lua)
@@ -106,6 +111,7 @@ load_config('plugins.identline_conf')
 load_config('plugins.telescope_conf')
 load_config('plugins.barbar_conf')
 load_config('plugins.oil_conf')
+load_config('plugins.dadbod_conf')
 
 -- Keymaps externos
 load_config('keymap.toggleterm_keymap')
