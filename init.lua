@@ -33,6 +33,7 @@ require("lazy").setup({
   'stevearc/oil.nvim',
   'lambdalisue/suda.vim',
   'miversen33/netman.nvim',
+  require('plugins.ufo_conf'),
 
   -- Telescope
   { 'nvim-telescope/telescope.nvim', tag = '0.1.5' },
@@ -59,11 +60,6 @@ require("lazy").setup({
   'nvim-tree/nvim-tree.lua',
 
   -- Databases
- -- 'tpope/vim-dadbod',
- -- 'kristijanhusak/vim-dadbod-ui',
- -- 'kristijanhusak/vim-dadbod-completion'
- --'kndndrj/nvim-dbee',
- -- { import = "plugins" }
   require("plugins.dbee_conf")
 })
 
@@ -114,8 +110,7 @@ load_config('plugins.identline_conf')
 load_config('plugins.telescope_conf')
 load_config('plugins.barbar_conf')
 load_config('plugins.oil_conf')
---load_config('plugins.dadbod_conf')
---load_config('plugins.dbee_conf')
+--load_config('plugins.ufo_conf')
 
 -- Keymaps externos
 load_config('keymap.toggleterm_keymap')
