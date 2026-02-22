@@ -1,6 +1,13 @@
-require('nvim-autopairs').setup{
-  check_ts = true,  -- usa treesitter para detectar contexto, bien
-  enable_check_bracket_line = false, -- IMPORTANTE, si lo activas solo te cierra si no hay otros corchetes o comillas
-  fast_wrap = {}, -- si seleccionas un texto se contendra, usando los atajos de teclado presstablecidos {}
-}
-
+-- ========================================================================== --
+--                       CONFIGURACIÓN DE NVIM-AUTOPAIRS                      --
+-- ========================================================================== --
+require('nvim-autopairs').setup({
+  -- Usa Tree-sitter para comprobar el contexto (evita cerrar en comentarios o strings)
+  check_ts = true,
+  
+  -- Si es false, permite cerrar paréntesis/comillas incluso si hay otros en la línea
+  enable_check_bracket_line = false,
+  
+  -- Permite envolver texto seleccionado con atajos rápidos {}
+  fast_wrap = {},
+})

@@ -1,17 +1,21 @@
+-- ========================================================================== --
+--                     GUÍAS VISUALES DE INDENTACIÓN (IBL)                    --
+-- ========================================================================== --
 require('ibl').setup {
     indent = {
-	char = '┊', -- carácter usado para la guía
+        char = '┊', -- Carácter discreto para las líneas verticales
     },
-    scope = { -- supuestamente detecta treesitter
+    scope = { 
+        -- Resalta el bloque de código donde se encuentra el cursor (vía Treesitter)
         enabled = true,
         show_start = true,
         show_end = true,
-	highlight = "IblScope",
-	vim.api.nvim_set_hl(0, "IblScope", { fg = "#607C9A", nocombine = true }) -- color linea
+        highlight = "IblScope",
+        -- Definición del color personalizado para el ámbito activo
+        vim.api.nvim_set_hl(0, "IblScope", { fg = "#607C9A", nocombine = true }) 
     },
-    -- no se dibujaran lineas en:
+    -- Deshabilita las líneas en ventanas donde no tienen sentido
     exclude = {
-	    filetypes = {'terminal', 'help', 'lspinfo', 'TelescopePrompt', 'packer', 'NvimTree'}
+        filetypes = {'terminal', 'help', 'lspinfo', 'TelescopePrompt', 'packer', 'NvimTree'}
     },
 }
-

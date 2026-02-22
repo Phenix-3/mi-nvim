@@ -1,25 +1,27 @@
--- dependencias
+-- ========================================================================== --
+--                       INTEGRACIÓN DE GIT (GITSIGNS)                        --
+-- ========================================================================== --
 local gs = require('gitsigns')
--- funcion de atajos de buffer
+
+-- Función interna para mapear atajos exclusivos de Git en cada buffer
 local function map_gitsigns()
     local map = vim.keymap.set
     local opts = { noremap = true, silent = true }
 
-    -- navegacion hunks 
-    map('n', '<leader>gn', gs.next_hunk, opts)  -- siguiente 
-    map('n', '<leader>gp', gs.prev_hunk, opts)  -- anterior
+    -- Navegación entre cambios (hunks)
+    map('n', '<leader>gn', gs.next_hunk, opts)  -- Ir al siguiente cambio
+    map('n', '<leader>gp', gs.prev_hunk, opts)  -- Ir al cambio anterior
 
-    -- hunk actual
-    map('n', '<leader>gs', gs.stage_hunk, opts) -- Stage (añadir)
-    map('n', '<leader>gr', gs.reset_hunk, opts) -- Reset (deshacer)
+    -- Gestión del cambio bajo el cursor
+    map('n', '<leader>gs', gs.stage_hunk, opts) -- Añadir al index (stage)
+    map('n', '<leader>gr', gs.reset_hunk, opts) -- Descartar cambio (reset)
 
-    -- muestra el blame
-    map('n', '<leader>gb', gs.blame_line, opts)
+    -- Información de autoría
+    map('n', '<leader>gb', gs.blame_line, opts) -- Ver quién escribió esta línea
 end
 
-
--- setup
 gs.setup({
+    -- Iconos que aparecen en el margen izquierdo (signcolumn)
     signs = {
         add          = { text = '▎' },
         change       = { text = '▎' },
@@ -28,10 +30,10 @@ gs.setup({
         changedelete = { text = '▎' },
     },
     signcolumn = true,
-    numhl = false,
-    linehl = false,
     
-    -- keymaps se pasan a la función on_attach.
-    on_attach = map_gitsigns, 
+    -- Muestra información de 'git blame' automáticamente al final de la línea
     current_line_blame = true, 
+    
+    -- Ejecuta los atajos definidos arriba al abrir un archivo bajo Git
+    on_attach = map_gitsigns, 
 })

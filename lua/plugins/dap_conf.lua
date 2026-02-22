@@ -1,69 +1,81 @@
--- compruebo dependencias
+-- ========================================================================== --
+--                       CONFIGURACIÓN DE DEBUGGER (DAP)                      --
+-- ========================================================================== --
 local dap = require("dap")
 local Terminal = require("toggleterm.terminal").Terminal
 
--- envio a mi por mi puerto
+local home = os.getenv("HOME")
+local venv_path = home .. "/.venvs/nvim-debug/bin/"
+
+-- 1. ADAPTADOR
 dap.adapters.python = {
-  type = "server", -- mi yo server
-  host = "127.0.0.1", -- me lo envio a yo
-  port = 5678, -- puerto que uso para enviar y recibir (se puede cambiar su este ya está en uso)
+  type = "server",
+  host = "127.0.0.1",
+  port = 5678,
 }
 
--- conf debugpy
+-- 2. CONFIGURACIÓN
 dap.configurations.python = {
   {
-    type = "python", -- lo que te llegue será python
-    request = "attach", -- enchufate a mi python
-    name = "Attach to debugpy", -- nombre (da igual como se llame)
-    connect = {
-      host = "127.0.0.1", -- me conecto a mi mismo
-      port = 5678, -- puerto por el que me enchufo
-    },
-    mode = "remote", -- opcional
-    pathMappings = { 
-      {
-        localRoot = vim.fn.getcwd(), -- raiz acutal (fichero py)
-        remoteRoot = ".", -- ruta donde se ejecuta el script 
-      },
-    },
-    pythonPath = function() -- ruta absoluta ejecutable de python
-      return "/home/phenix/.venvs/nvim-debug/bin/python" -- mi entorno virtual (venvs)
-    end,
+    type = "python",
+    request = "attach",
+    name = "Attach to debugpy",
+    connect = { host = "127.0.0.1", port = 5678 },
+    mode = "remote",
+    pathMappings = { { localRoot = vim.fn.getcwd(), remoteRoot = "." } },
+    pythonPath = function() return venv_path .. "python" end,
   },
 }
 
--- ejecuta el script actual modo debug 
+-- 3. FUNCIÓN DE EJECUCIÓN
 function RunAndAttachDebugpy()
-  local file = vim.fn.expand("%:p") -- ruta absoluta fichero actual
+  vim.cmd("silent! write")
+  
+  local file = vim.fn.expand("%:p")
+  local cmd = string.format(
+    "export PYDEVD_DISABLE_FILE_VALIDATION=1 && " ..
+    "source %sactivate && " ..
+    "python -Xfrozen_modules=off -m debugpy --listen 5678 --wait-for-client '%s'; " ..
+    "echo -e '\\n---------------------------------------'; " ..
+    "echo -e '      EJECUCIÓN FINALIZADA'; " ..
+    "echo -e '  Presiona [q] para cerrar el panel'; " ..
+    "echo -e '---------------------------------------'; " ..
+    "read", 
+    venv_path, 
+    file
+  )
+
+  -- Tamaño ajustado al 38%
+  local ancho_ajustado = math.floor(vim.o.columns * 0.38)
 
   local debugpy_term = Terminal:new({
-    cmd = string.format(
-      "source /home/phenix/.venvs/nvim-debug/bin/activate && python -m debugpy --listen 5678 --wait-for-client '%s'", -- activa el entorno virtual
-      file
-    ),
-    -- ya definido en otro fichero
-    hidden = true,
-    direction = "horizontal",
+    cmd = cmd,
+    direction = "vertical",
+    size = ancho_ajustado, 
     close_on_exit = false,
-    on_open = function()
-      vim.defer_fn(function() -- segundos a que todo este bien
-        vim.cmd("wincmd p")
-        require('dap').continue()
+    on_open = function(term)
+      -- Mapeos y Modo Normal
+      vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<CR>", {noremap = true, silent = true})
+      
+      -- Forzamos Modo Normal al abrir
+      vim.cmd("stopinsert")
+
+      -- Ejecutar DAP forzando la configuración de Python
+      vim.defer_fn(function()
+        if dap.configurations.python and dap.configurations.python[1] then
+          dap.run(dap.configurations.python[1])
+        end
       end, 500)
     end,
   })
-
+  
   debugpy_term:toggle()
 end
 
--- si sale mal reiniciar dap (cosa muy comun)
-function RestartDAP()
+-- 4. KEYMAPS
+vim.keymap.set("n", "<F5>", RunAndAttachDebugpy, { desc = "DAP: Run Python" })
+vim.keymap.set("n", "<F6>", function() 
   dap.terminate()
   dap.disconnect()
-  print("DAP reiniciado.")
-end
-
--- keymap
-vim.api.nvim_set_keymap("n", "<F5>", ":lua RunAndAttachDebugpy()<CR>", { noremap = true, silent = true }) -- f5 salta la termianl
-vim.api.nvim_set_keymap("n", "<F6>", ":lua RestartDAP()<CR>", { noremap = true, silent = true }) -- f6 restart de dap
-
+  print("DAP: Reset")
+end, { desc = "DAP: Reset" })

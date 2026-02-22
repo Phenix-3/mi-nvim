@@ -1,6 +1,13 @@
+-- ========================================================================== --
+--                        CONFIGURACIÓN DE COMENTARIOS                        --
+-- ========================================================================== --
 require('nvim_comment').setup({
-  line_mapping = ",c",   -- keymap comenta línea [,c]
-  operator_mapping = "gc", -- integracion de [,c] con otros comandos (ej, documento no de programacion o que no existan comment)
-  comment_empty = false, -- no comentar líneas vacías, no me gusta
+  -- Atajo para comentar la línea actual
+  line_mapping = ",c",
+  
+  -- Atajo de operador (para usar con movimientos de Vim)
+  operator_mapping = "gc",
+  
+  -- Evita insertar símbolos de comentario en líneas que están vacías
+  comment_empty = false,
 })
-

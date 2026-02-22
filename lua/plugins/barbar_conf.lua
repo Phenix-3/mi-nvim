@@ -1,16 +1,18 @@
--- lua/plugins/barbar_conf.lua
+-- ========================================================================== --
+--                         CONFIGURACIÓN DE BARBAR (TABS)                     --
+-- ========================================================================== --
 require('barbar').setup({
-  -- Habilita o deshabilita animaciones
+  -- Habilita animaciones al abrir/cerrar/mover pestañas
   animation = true,
 
-  -- Configura los iconos de los archivos (requiere nvim-web-devicons)
+  -- Configuración estética de los iconos en la barra superior
   icons = {
-    filetype = { enabled = true },
-    button = '×', -- El botón de cerrar
-    modified = { button = '●' }, -- Icono cuando hay cambios sin guardar
-    pinned = { button = '📌', filename = true },
+    filetype = { enabled = true },  -- Muestra icono según extensión (requiere devicons)
+    button = '×',                   -- Símbolo para cerrar el buffer
+    modified = { button = '●' },     -- Indicador de archivo con cambios pendientes
+    pinned = { button = '📌', filename = true }, -- Indicador de pestaña fijada
   },
 
-  -- Si quieres que las pestañas se ordenen por lenguaje, nombre, etc.
-  auto_hide = false, -- Si es true, oculta la barra si solo hay 1 buffer
+  -- No oculta la barra aunque solo haya un buffer abierto
+  auto_hide = false,
 })
