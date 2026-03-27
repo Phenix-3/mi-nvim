@@ -26,6 +26,7 @@ The configuration is organized into logical modules to separate core settings, k
     └── plugins/            # Individual plugin configurations
         ├── ...             # (Check the list below for details)
 
+```
 
  Plugins & Credits
 
@@ -113,9 +114,6 @@ Setup Steps
 
     The package manager (lazy.nvim) will automatically start downloading and installing all the plugins.
 
-📄 License
+License
 
 This configuration is licensed under the MIT License.
-
-
-¿Te gustaría que añada una sección de **"Screenshots"** para que puedas subir imágenes
