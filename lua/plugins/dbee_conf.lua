@@ -13,9 +13,9 @@ return {
         -- Fuente en memoria con conexión MySQL predefinida
         require("dbee.sources").MemorySource:new({
           {
-            name = "el_coder",
-            type = "mysql",   
-            url = "usuario:usuario@tcp(localhost:3306)/miscosas",
+            name = "mioracle1",
+            type = "oracle",
+            url = "sys:Airis2025@192.168.1.50:1521/xe",
           },
         }),
       },
