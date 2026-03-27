@@ -15,7 +15,7 @@ return {
           {
             name = "mioracle1",
             type = "oracle",
-            url = "sys:Airis2025@192.168.1.50:1521/xe",
+            url = "sys:password@192.168.1.50:1521/xe",
           },
         }),
       },
