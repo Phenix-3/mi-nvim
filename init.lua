@@ -8,7 +8,12 @@ vim.g.mapleader = ","
 vim.opt.swapfile = false  -- Desactiva el swap para evitar los avisos de tu imagen
 vim.opt.undofile = true   -- Mantiene el historial de "deshacer" incluso después de cerrar Neovim
 
+vim.opt.clipboard = "unnamedplus" -- Sincroniza el portapapeles de Neovim con el del sistema
+
 vim.o.timeoutlen = 200 	  -- Reduce a 0,2 milisegundos el tiempo de comando
+
+vim.opt.conceallevel = 2   -- Permite a Obsidian y Render-Markdown ocultar caracteres feos
+
 
 -- ========================================================================== --
 --                           GESTIÓN DE PAQUETES                              --
@@ -23,6 +28,14 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
+-- ========================================================================== --
+--                               FUNCIONES                                    --
+-- ========================================================================== --
+-- Compila el md a html con el mismo estilo
+--require("funciones.compilador_md").setup()
+
+
 
 -- ========================================================================== --
 --                          CONFIGURACIÓN DE PLUGINS                          --
@@ -73,6 +86,10 @@ require("lazy").setup({
   
   -- [ EXPLORACIÓN DE ARCHIVOS ] -----------------------------------------------
   'nvim-tree/nvim-tree.lua',	     -- Explorador de archivos lateral
+
+  -- [ APUNTES EN MARKDOWN ] -----------------------------------------------
+  require('plugins.obsidian_conf'),
+  'iamcco/markdown-preview.nvim',
 
   -- [ BASES DE DATOS ] --------------------------------------------------------
   require("plugins.dbee_conf")	     -- Cliente de base de datos integrado
@@ -134,6 +151,7 @@ load_config('plugins.identline_conf')
 load_config('plugins.telescope_conf')
 load_config('plugins.barbar_conf')
 load_config('plugins.oil_conf')
+load_config('plugins.markdown_conf')
 
 -- [ Carga de Keymaps Específicos ]
 load_config('keymap.toggleterm_keymap')
@@ -143,3 +161,4 @@ load_config('keymap.general_keymap')
 load_config('keymap.barbar_keymap')
 load_config('keymap.tree_keymap')
 load_config('keymap.dbee_keymap')
+
