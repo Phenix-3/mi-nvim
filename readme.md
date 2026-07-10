@@ -1,119 +1,50 @@
-# My Neovim Configuration
+# Mi Configuración de Neovim
 
-A modular, fast, and extensible Neovim setup built with **Lua** and managed by **lazy.nvim**. This configuration is designed to provide a modern IDE-like experience while staying true to the speed of the terminal.
+Esta es mi configuración personal de Neovim, se encuentra separada para facilitar el mantenimiento y la escalabilidad. En la rama **`nuevo`**, es donde estoy refinando la estructura de plugins, mapeos y añadiendo nuevos plugins.
 
----
+## Estructura del Editor
 
-## Project Structure
-
-The configuration is organized into logical modules to separate core settings, keybindings, and plugin-specific logic.
+La configuración está organizada de forma modular dentro de la carpeta `lua/`:
 
 ```text
-.
-├── init.lua                # Entry point: loads core, keymaps, and plugins
-├── lazy-lock.json          # Lockfile for plugin versions
-├── LICENSE                 # Project license
-└── lua/
-    ├── core/               # Base settings (options, globals, autocommands)
-    ├── keymap/             # Keybindings organized by plugin/functionality
-    │   ├── barbar_keymap.lua
-    │   ├── copiar_keymap.lua
-    │   ├── dbee_keymap.lua
-    │   ├── general_keymap.lua
-    │   ├── telescope_keymap.lua
-    │   ├── toggleterm_keymap.lua
-    │   └── tree_keymap.lua
-    └── plugins/            # Individual plugin configurations
-        ├── ...             # (Check the list below for details)
+lua/
+├── funciones/     # Funciones personalizadas y utilidades
+├── keymap/        # Mapeos de teclado organizados por plugin/funcionalidad
+│   ├── barbar_keymap.lua
+│   ├── telescope_keymap.lua
+│   └── ... (y otros)
+└── plugins/       # Configuraciones específicas de cada plugin
+    ├── cmp_conf.lua
+    ├── telescope_conf.lua
+    ├── nvim-treesitter_conf.lua
+    └── ... (y otros)
+init.lua           # Archivo de entrada principal
+```
+## Plugins Destacados
 
+Mi entorno está configurado para un flujo de trabajo moderno que incluye:
+
+- Gestión de UI: barbar, lualine, nightfox (tema).
+
+- Navegación: telescope, tree (nvim-tree), oil.
+
+- Productividad y Código: cmp (autocompletado), nvim-treesitter (resaltado), comment, autopairs.
+
+- Herramientas Especializadas: dbee (gestión de BBDD), obsidian (notas), ufo (plegado de código), git-signs.
+
+- Terminal: toggleterm para gestión de terminales integradas.
+
+## Instalación
+```zsh
+git clone https://github.com/Phenix-3/mi-nvim.git
 ```
 
- Plugins & Credits
+## Dependencias
 
-Special thanks to the open-source community for these amazing tools:
+Aun no he recogido todas las dependencias necesarias, este apartado se actualizará más adelante.
 
- UI & Aesthetics
+## Notas de la rama nuevo
 
-    Nightfox.nvim: A highly customizable color scheme with great contrast.
+En esta rama estoy realizando la separación de configuraciones por archivo (siguiendo el patrón *_conf.lua y *_keymap.lua) para mantener el init.lua limpio y modular.
 
-    Lualine.nvim: A blazing fast and beautiful statusline.
-
-    Barbar.nvim: A tabline with icons, easy navigation, and buffer management.
-
-    Indent-blankline.nvim: Adds indentation guides to help visualize code blocks.
-
- Navigation & Search
-
-    Telescope.nvim: The ultimate fuzzy finder for files, text, and Neovim internals.
-
-    Nvim-Tree: A fast and intuitive file explorer sidebar.
-
-    Oil.nvim: Allows editing the file system like a normal Neovim buffer.
-
- Coding & Productivity
-
-    Nvim-Treesitter: High-performance syntax highlighting and code parsing.
-
-    Nvim-Cmp: A modular completion engine for Neovim.
-
-    Nvim-Autopairs: Automatically closes brackets, quotes, and tags.
-
-    Comment.nvim: Smart and powerful commenting tool.
-
-    Gitsigns.nvim: Git integration showing hunks in the sign column.
-
-    Toggleterm.nvim: Easily manage multiple terminal windows.
-
- Advanced Tools
-
-    Nvim-Dbee: An interactive database client inside Neovim.
-
-    Nvim-DAP: Debug Adapter Protocol client for a full debugging experience.
-
-    Nvim-Ufo: Ultra Fold Optimization for better code folding.
-
- Important Keymaps
-
-The keymaps are modularized in lua/keymap/. Here are the most relevant shortcuts:
-Category	Action	Shortcut
-Explorer	Toggle Nvim-Tree	<Leader>e
-Search	Find Files (Telescope)	<Leader>ff
-Search	Live Grep (Search Text)	<Leader>fg
-Terminal	Toggle Floating Terminal	<Leader>t
-Tabs	Next / Previous Tab	gt / gT
-Buffers	Close Current Buffer	<Leader>c
-Clipboard	Copy to System Clipboard	<Leader>y
- 
- Installation
-Prerequisites
-
-    Neovim (>= 0.9.0)
-
-    Git
-
-    Nerd Fonts (e.g., JetBrainsMono Nerd Font)
-
-    ripgrep (Required for Telescope's live_grep)
-
-Setup Steps
-
-    Backup your current configuration:
-    Bash
-
-    mv ~/.config/nvim ~/.config/nvim.bak
-
-    Clone this repository:
-    Bash
-
-    git clone <YOUR_REPO_URL> ~/.config/nvim
-
-    Launch Neovim:
-    Bash
-
-    nvim
-
-    The package manager (lazy.nvim) will automatically start downloading and installing all the plugins.
-
-License
-
-This configuration is licensed under the MIT License.
+Si hay algún cambio en esta rama puede ser porque esté en ello o simplemente no lo haya comentado aún.
